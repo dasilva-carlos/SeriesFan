@@ -3,12 +3,12 @@ package com.dasilva.carlos.seriesfan.domain
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.dasilva.carlos.seriesfan.network.data.ResponseException
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.single
-import kotlin.coroutines.CoroutineContext
 
 private const val FIRST_PAGE = 0
 private const val NOT_FOUND_CODE = 404
