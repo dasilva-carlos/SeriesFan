@@ -1,13 +1,12 @@
 package com.dasilva.carlos.seriesfan.network.flow
 
+import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 import kotlinx.coroutines.flow.Flow
 import retrofit2.CallAdapter
 import retrofit2.Retrofit
-import java.lang.reflect.ParameterizedType
-import java.lang.reflect.Type
 
-
-class FlowAdapterFactory: CallAdapter.Factory() {
+class FlowAdapterFactory : CallAdapter.Factory() {
     override fun get(
         returnType: Type,
         annotations: Array<Annotation>,

@@ -10,5 +10,5 @@ data class ShowDTO(
     val name: String,
 
     @SerializedName("image")
-    val image: ImageDTO?,
+    val image: ImageDTO?
 )

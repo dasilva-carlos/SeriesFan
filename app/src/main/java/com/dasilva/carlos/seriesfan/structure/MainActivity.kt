@@ -1,7 +1,7 @@
 package com.dasilva.carlos.seriesfan.structure
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.dasilva.carlos.seriesfan.R
 
 class MainActivity : AppCompatActivity() {

@@ -12,7 +12,7 @@ interface ShowsApi {
         @Query("q") query: String
     ): Flow<List<ShowRatingDTO>>
 
-    @GET( "/shows")
+    @GET("/shows")
     fun getShowsList(
         @Query("page") page: Int
     ): Flow<List<ShowDTO>>
