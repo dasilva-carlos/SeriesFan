@@ -2,7 +2,6 @@ package com.dasilva.carlos.seriesfan.utils
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.dasilva.carlos.seriesfan.network.data.Fail
 import com.dasilva.carlos.seriesfan.network.data.Loading
 import com.dasilva.carlos.seriesfan.network.data.ResponseState
@@ -12,10 +11,12 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
+import timber.log.Timber
 
 fun <T : Any> Flow<T>.mapToResponseState(): Flow<ResponseState<T>> = merge(flowOf(Loading), map {
     Success(it)
 }.catch { e ->
+    Timber.d(e)
     Fail(e)
 })
 
@@ -24,7 +25,7 @@ fun <T : Any> LiveData<ResponseState<T>>.observeStates(
     onLoading: (() -> Unit)? = null,
     onError: ((Throwable) -> Unit)? = null,
     onSuccess: ((T) -> Unit)? = null
-) = observe(owner, Observer {
+) = observe(owner, {
     when (it) {
         Loading -> onLoading?.invoke()
         is Success -> onSuccess?.invoke(it.data)

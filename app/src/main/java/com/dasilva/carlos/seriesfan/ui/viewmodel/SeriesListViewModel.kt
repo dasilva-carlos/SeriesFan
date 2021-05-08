@@ -19,6 +19,7 @@ import com.dasilva.carlos.seriesfan.network.data.ResponseState
 import com.dasilva.carlos.seriesfan.utils.mapToResponseState
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
@@ -45,6 +46,7 @@ class SeriesListViewModel(
         .asLiveData(viewModelScope.coroutineContext)
 
     val searchList: LiveData<ResponseState<List<SeriesVO>>> = _search.asFlow()
+        .filter { !it.isNullOrBlank() }
         .debounce(DEBOUNCE_SEARCH_PERIOD)
         .flatMapLatest {
             api.search(query = it).map(::convertRating).mapToResponseState()

@@ -7,12 +7,14 @@ import com.dasilva.carlos.seriesfan.domain.SeriesDiffCallback
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
 import com.dasilva.carlos.seriesfan.utils.inflateView
 
-class SeriesAdapter : ListAdapter<SeriesVO, SeriesViewHolder>(
+class SeriesAdapter(
+    private val listener: SeriesItemListener
+) : ListAdapter<SeriesVO, SeriesViewHolder>(
     SeriesDiffCallback()
 ) {
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(it)
+            holder.bind(it, listener)
         }
     }
 

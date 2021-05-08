@@ -9,10 +9,15 @@ import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import org.koin.core.logger.Level
 import timber.log.Timber
+import timber.log.Timber.DebugTree
 
 class SeriesFanApplication : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        if (BuildConfig.DEBUG) {
+            Timber.plant(DebugTree())
+        }
 
         startKoin {
             androidContext(this@SeriesFanApplication)
@@ -22,10 +27,6 @@ class SeriesFanApplication : Application() {
             }
 
             modules(getModules())
-        }
-
-        if (BuildConfig.DEBUG) {
-            Timber.plant(Timber.DebugTree())
         }
     }
 

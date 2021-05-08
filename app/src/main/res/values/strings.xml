@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">Series Fan</string>
 
-    <string name="search_hint">Procure por uma série</string>
-    <string name="loading_text">carregando…</string>
+    <string name="search_hint">Search for a series</string>
+    <string name="loading_text">loading…</string>
+    <string name="schedule_text">Schedule:</string>
+    <string name="genre_text">Genre:</string>
+    <string name="resume_text">Resume:</string>
+
+    <string name="schedule_data">%1$s at %2$s</string>
 </resources>

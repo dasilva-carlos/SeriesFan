@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/details_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clipToPadding="false"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/banner"
+                android:layout_width="0dp"
+                android:layout_height="260dp"
+                android:layout_marginEnd="@dimen/spacing_default"
+                android:importantForAccessibility="no"
+                android:scaleType="fitStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guideline"
+                app:layout_constraintTop_toTopOf="@id/title"
+                tools:src="@tools:sample/backgrounds/scenic" />
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Text.Heading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginTop="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:layout_constraintEnd_toStartOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="@tools:sample/lorem" />
+
+            <TextView
+                android:id="@+id/schedule_label"
+                style="@style/Text.Big"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginTop="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/schedule_text"
+                app:layout_constraintEnd_toStartOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <TextView
+                android:id="@+id/schedule_text"
+                style="@style/Text.Default"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:layout_constraintEnd_toStartOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/schedule_label"
+                tools:text="Monday, Friday at 10:00" />
+
+            <TextView
+                android:id="@+id/genre_label"
+                style="@style/Text.Big"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginTop="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_small"
+                android:text="@string/genre_text"
+                app:layout_constraintEnd_toStartOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/schedule_text" />
+
+            <TextView
+                android:id="@+id/genre_text"
+                style="@style/Text.Default"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_small"
+                app:layout_constraintEnd_toStartOf="@+id/banner"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/genre_label"
+                app:layout_constraintBottom_toTopOf="@+id/resume_label"
+                app:layout_constraintVertical_bias="0"
+                tools:text="Comedy, Sci-fi" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="banner, genre_text"/>
+
+            <TextView
+                android:id="@+id/resume_label"
+                style="@style/Text.Big"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginTop="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_default"
+                android:text="@string/resume_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barrier" />
+
+            <TextView
+                android:id="@+id/resume_text"
+                style="@style/Text.Default"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/spacing_default"
+                android:layout_marginEnd="@dimen/spacing_default"
+                android:layout_marginBottom="@dimen/spacing_default"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/resume_label"
+                tools:text="@tools:sample/lorem/random" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.48" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <com.dasilva.carlos.seriesfan.customview.LoadingView
+        android:id="@+id/loadingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,12 +7,14 @@ import com.dasilva.carlos.seriesfan.domain.SeriesDiffCallback
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
 import com.dasilva.carlos.seriesfan.utils.inflateView
 
-class SeriesPageAdapter : PagingDataAdapter<SeriesVO, SeriesViewHolder>(
+class SeriesPageAdapter(
+    private val listener: SeriesItemListener
+) : PagingDataAdapter<SeriesVO, SeriesViewHolder>(
     diffCallback = SeriesDiffCallback()
 ) {
     override fun onBindViewHolder(holder: SeriesViewHolder, position: Int) {
         getItem(position)?.let {
-            holder.bind(it)
+            holder.bind(it, listener)
         }
     }
 

@@ -1,6 +1,5 @@
 package com.dasilva.carlos.seriesfan.network.client
 
-import com.dasilva.carlos.seriesfan.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
@@ -20,11 +19,6 @@ class NetworkServiceProvider(
     init {
         val client = OkHttpClient()
             .newBuilder()
-            .apply {
-                if (BuildConfig.DEBUG) {
-                    addInterceptor(logInterceptor)
-                }
-            }
             .addInterceptor(logInterceptor)
             .build()
 

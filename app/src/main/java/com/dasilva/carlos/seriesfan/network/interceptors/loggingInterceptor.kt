@@ -5,4 +5,6 @@ import timber.log.Timber
 
 fun getLoggingInterceptor() = HttpLoggingInterceptor {
     message -> Timber.tag("OkHttp").d(message)
+}.apply {
+    setLevel(HttpLoggingInterceptor.Level.BODY)
 }

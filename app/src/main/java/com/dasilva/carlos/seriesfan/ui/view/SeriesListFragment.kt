@@ -11,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesListBinding
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
+import com.dasilva.carlos.seriesfan.navigation.goToDetails
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
 import com.dasilva.carlos.seriesfan.ui.adapter.LoadAdapter
 import com.dasilva.carlos.seriesfan.ui.adapter.SeriesAdapter
+import com.dasilva.carlos.seriesfan.ui.adapter.SeriesItemListener
 import com.dasilva.carlos.seriesfan.ui.adapter.SeriesPageAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesListViewModel
 import com.dasilva.carlos.seriesfan.utils.observeStates
@@ -22,7 +24,7 @@ import org.koin.android.viewmodel.ext.android.viewModel
 private const val FOOTER_VIEW_TYPE = 1
 private const val DEFAULT_LOOK_UP_SIZE = 1
 
-class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.fragment_series_list) {
+class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.fragment_series_list), SeriesItemListener {
 
     override val binder = FragmentSeriesListBinding::bind
 
@@ -33,29 +35,33 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        prepareView()
+        preparePagedList()
+        prepareSearch()
     }
 
-    private fun prepareView() {
-        pageAdapter = SeriesPageAdapter()
+    private fun preparePagedList() {
+        pageAdapter = SeriesPageAdapter(this)
         listAdapter = pageAdapter.withLoadStateFooter(LoadAdapter())
-        searchAdapter = SeriesAdapter()
 
         binding.run {
             recyclerView.adapter = listAdapter
             recyclerView.getGridLayout()?.spanSizeLookup = getSpanSizeLookup()
-
-            editText.addTextChangedListener {
-                viewModel.search(it?.toString())
-            }
         }
 
         viewModel.pagedDataSource.observe(viewLifecycleOwner) { data ->
             pageAdapter.submitData(lifecycle, data)
         }
         pageAdapter.addLoadStateListener {
-            binding.loadingView.isVisible = it.refresh == LoadState.Loading
+            binding.loadingView.isVisible = (it.refresh == LoadState.Loading && pageAdapter.itemCount == 0)
         }
+    }
+
+    private fun prepareSearch() {
+        binding.editText.addTextChangedListener {
+            viewModel.search(it?.toString())
+        }
+
+        searchAdapter = SeriesAdapter(this)
 
         viewModel.showSearchList.observe(viewLifecycleOwner) { showSearchList ->
             binding.recyclerView.adapter = if (showSearchList) {
@@ -95,4 +101,8 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
     }
 
     private fun RecyclerView.getGridLayout() = layoutManager as? GridLayoutManager
+
+    override fun onItemClicked(data: SeriesVO) {
+        goToDetails(data.id)
+    }
 }

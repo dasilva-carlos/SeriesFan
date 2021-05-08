@@ -9,7 +9,11 @@ import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
 class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = ItemSeriesBinding.bind(view)
 
-    fun bind(data: SeriesVO) {
+    fun bind(data: SeriesVO, listener: SeriesItemListener) {
+        binding.root.setOnClickListener {
+            listener.onItemClicked(data)
+        }
+
         Glide.with(binding.root)
             .load(data.banner)
             .centerCrop()
@@ -17,4 +21,8 @@ class SeriesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         binding.itemTitle.text = data.title
     }
+}
+
+interface SeriesItemListener {
+    fun onItemClicked(data: SeriesVO)
 }

@@ -9,5 +9,15 @@
         android:id="@+id/seriesListFragment"
         android:name="com.dasilva.carlos.seriesfan.ui.view.SeriesListFragment"
         android:label="SeriesListFragment"
-        tools:layout="@layout/fragment_series_list" />
+        tools:layout="@layout/fragment_series_list" >
+        <action
+            android:id="@+id/action_to_seriesDetailFragment"
+            app:destination="@id/seriesDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/seriesDetailFragment"
+        android:name="com.dasilva.carlos.seriesfan.ui.view.SeriesDetailFragment"
+        android:label="SeriesDetailFragment"
+        tools:layout="@layout/fragment_series_detail" />
 </navigation>
