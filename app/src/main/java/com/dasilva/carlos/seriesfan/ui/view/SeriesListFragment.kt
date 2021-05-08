@@ -2,15 +2,21 @@ package com.dasilva.carlos.seriesfan.ui.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
+import androidx.paging.LoadState
 import androidx.recyclerview.widget.ConcatAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesListBinding
+import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
 import com.dasilva.carlos.seriesfan.ui.adapter.LoadAdapter
+import com.dasilva.carlos.seriesfan.ui.adapter.SeriesAdapter
 import com.dasilva.carlos.seriesfan.ui.adapter.SeriesPageAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesListViewModel
+import com.dasilva.carlos.seriesfan.utils.observeStates
 import org.koin.android.viewmodel.ext.android.viewModel
 
 private const val FOOTER_VIEW_TYPE = 1
@@ -21,8 +27,9 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
     override val binder = FragmentSeriesListBinding::bind
 
     private val viewModel: SeriesListViewModel by viewModel()
-    private lateinit var dataAdapter: SeriesPageAdapter
-    private lateinit var recyclerViewAdapter: ConcatAdapter
+    private lateinit var pageAdapter: SeriesPageAdapter
+    private lateinit var listAdapter: ConcatAdapter
+    private lateinit var searchAdapter: SeriesAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -30,22 +37,56 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
     }
 
     private fun prepareView() {
-        dataAdapter = SeriesPageAdapter()
-        recyclerViewAdapter = dataAdapter.withLoadStateFooter(LoadAdapter())
+        pageAdapter = SeriesPageAdapter()
+        listAdapter = pageAdapter.withLoadStateFooter(LoadAdapter())
+        searchAdapter = SeriesAdapter()
 
         binding.run {
-            recyclerView.adapter = recyclerViewAdapter
+            recyclerView.adapter = listAdapter
             recyclerView.getGridLayout()?.spanSizeLookup = getSpanSizeLookup()
+
+            editText.addTextChangedListener {
+                viewModel.search(it?.toString())
+            }
         }
 
         viewModel.pagedDataSource.observe(viewLifecycleOwner) { data ->
-            dataAdapter.submitData(lifecycle, data)
+            pageAdapter.submitData(lifecycle, data)
+        }
+        pageAdapter.addLoadStateListener {
+            binding.loadingView.isVisible = it.refresh == LoadState.Loading
+        }
+
+        viewModel.showSearchList.observe(viewLifecycleOwner) { showSearchList ->
+            binding.recyclerView.adapter = if (showSearchList) {
+                searchAdapter.submitList(null)
+                searchAdapter
+            } else {
+                listAdapter
+            }
+        }
+
+        viewModel.searchList.observeStates(
+            viewLifecycleOwner,
+            onLoading = ::onSearchLoading,
+            onSuccess = ::onSearchSuccess
+        )
+    }
+
+    private fun onSearchLoading() {
+        binding.loadingView.isVisible = searchAdapter.itemCount == 0
+    }
+
+    private fun onSearchSuccess(data: List<SeriesVO>) {
+        binding.run {
+            loadingView.isVisible = false
+            searchAdapter.submitList(data)
         }
     }
 
     private fun getSpanSizeLookup() = object : GridLayoutManager.SpanSizeLookup() {
         override fun getSpanSize(position: Int): Int {
-            return if (recyclerViewAdapter.getItemViewType(position) == FOOTER_VIEW_TYPE) {
+            return if (listAdapter.getItemViewType(position) == FOOTER_VIEW_TYPE) {
                 resources.getInteger(R.integer.span_size_series_list)
             } else {
                 DEFAULT_LOOK_UP_SIZE

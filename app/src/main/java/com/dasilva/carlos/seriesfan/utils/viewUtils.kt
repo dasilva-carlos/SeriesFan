@@ -1,4 +1,4 @@
-package com.dasilva.carlos.seriesfan.ui.utils
+package com.dasilva.carlos.seriesfan.utils
 
 import android.view.LayoutInflater
 import android.view.View

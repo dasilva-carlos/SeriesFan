@@ -7,7 +7,7 @@ import androidx.paging.LoadState
 import androidx.paging.LoadStateAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.dasilva.carlos.seriesfan.R
-import com.dasilva.carlos.seriesfan.ui.utils.inflateView
+import com.dasilva.carlos.seriesfan.utils.inflateView
 
 class LoadAdapter : LoadStateAdapter<LoadingViewHolder>() {
 
