@@ -3,6 +3,7 @@ package com.dasilva.carlos.seriesfan.structure
 import android.app.Application
 import com.dasilva.carlos.seriesfan.BuildConfig
 import com.dasilva.carlos.seriesfan.network.di.networkModule
+import com.dasilva.carlos.seriesfan.ui.di.uiModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -29,6 +30,7 @@ class SeriesFanApplication : Application() {
     }
 
     private fun getModules() = listOf(
-        networkModule
+        networkModule,
+        uiModule
     )
 }

@@ -16,7 +16,7 @@ class FlowAdapter<T>(
     private val responseType: Type
 ) : CallAdapter<T, Flow<T>> {
     override fun adapt(call: Call<T>): Flow<T> {
-        return flow {
+        return flow<T> {
             emit(
                 suspendCancellableCoroutine { continuation ->
                     call.enqueue(object : Callback<T> {
@@ -27,7 +27,7 @@ class FlowAdapter<T>(
                         override fun onResponse(call: Call<T>, response: Response<T>) {
                             if (response.isSuccessful) {
                                 try {
-                                    continuation.resume(response.body())
+                                    continuation.resume(response.body()!!)
                                 } catch (e: Exception) {
                                     continuation.resumeWithException(e)
                                 }

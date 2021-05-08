@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 val networkModule = module {
     single { FlowAdapterFactory() }
     single { GsonConverterFactory.create() }
-    single { NetworkServiceProvider(get(), get(), getLoggingInterceptor()) }
+    single { NetworkServiceProvider(get<FlowAdapterFactory>(), get<GsonConverterFactory>(), getLoggingInterceptor()) }
 
     factory { get<NetworkServiceProvider>().createService(ShowsApi::class.java) }
 }
