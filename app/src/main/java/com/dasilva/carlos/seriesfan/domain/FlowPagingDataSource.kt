@@ -44,10 +44,9 @@ class FlowPagingDataSource<T : Any, R : Any> (
                             nextKey = null
                         )
                     )
+                } else {
+                    emit(LoadResult.Error(e))
                 }
-
-                emit(LoadResult.Error(e))
-            }
-            .single()
+            }.single()
     }
 }

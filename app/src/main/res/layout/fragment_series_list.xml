@@ -78,7 +78,7 @@
         android:id="@+id/errorViewCard"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_margin="@dimen/spacing_small"
         app:cardCornerRadius="@dimen/radius_small"
         app:cardElevation="0dp"
