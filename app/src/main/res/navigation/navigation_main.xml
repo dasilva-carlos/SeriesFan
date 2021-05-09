@@ -12,21 +12,24 @@
         tools:layout="@layout/fragment_series_list" >
         <action
             android:id="@+id/action_to_seriesDetailFragment"
-            app:destination="@id/seriesDetailFragment" />
+            app:destination="@id/navigation_series" />
     </fragment>
 
-    <fragment
-        android:id="@+id/seriesDetailFragment"
-        android:name="com.dasilva.carlos.seriesfan.ui.view.SeriesDetailFragment"
-        android:label="SeriesDetailFragment"
-        tools:layout="@layout/fragment_series_detail" >
-        <action
-            android:id="@+id/action_to_episodeDetailFragment"
-            app:destination="@id/episodeDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/episodeDetailFragment"
-        android:name="com.dasilva.carlos.seriesfan.ui.view.EpisodeDetailFragment"
-        android:label="EpisodeDetailFragment"
-        tools:layout="@layout/fragment_episode_detail" />
+    <navigation android:id="@+id/navigation_series"
+        app:startDestination="@id/seriesDetailFragment">
+        <fragment
+            android:id="@+id/seriesDetailFragment"
+            android:name="com.dasilva.carlos.seriesfan.ui.view.SeriesDetailFragment"
+            android:label="SeriesDetailFragment"
+            tools:layout="@layout/fragment_series_detail">
+            <action
+                android:id="@+id/action_to_episodeDetailFragment"
+                app:destination="@id/episodeDetailFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/episodeDetailFragment"
+            android:name="com.dasilva.carlos.seriesfan.ui.view.EpisodeDetailFragment"
+            android:label="EpisodeDetailFragment"
+            tools:layout="@layout/fragment_episode_detail" />
+    </navigation>
 </navigation>

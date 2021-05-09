@@ -2,7 +2,9 @@ package com.dasilva.carlos.seriesfan.ui.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dasilva.carlos.seriesfan.R
@@ -19,6 +21,7 @@ import com.dasilva.carlos.seriesfan.utils.getSpannedFromHtml
 import com.dasilva.carlos.seriesfan.utils.mapToResponseState
 import com.dasilva.carlos.seriesfan.utils.reduceWithComma
 import java.lang.ref.WeakReference
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class SeriesDetailViewModel(
@@ -27,11 +30,19 @@ class SeriesDetailViewModel(
 ) : ViewModel() {
     private val referenceContext = WeakReference(context)
 
-    fun getSeriesInformation(id: Int): LiveData<ResponseState<SeriesDetailVO>> =
-        api.getShowDetails(id)
-            .map(::convert)
-            .mapToResponseState()
-            .asLiveData(viewModelScope.coroutineContext)
+    private val _seriesInformation = MutableLiveData<Int>()
+    val seriesInformation: LiveData<ResponseState<SeriesDetailVO>> =
+        _seriesInformation.asFlow().flatMapLatest {
+            api.getShowDetails(it)
+                .map(::convert)
+                .mapToResponseState()
+        }.asLiveData(viewModelScope.coroutineContext)
+
+    fun fetchViewInformation(id: Int) {
+        if (seriesInformation.value == null) {
+            _seriesInformation.value = id
+        }
+    }
 
     private fun convert(data: ShowDetailDTO) = SeriesDetailVO(
         title = data.name,

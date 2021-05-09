@@ -16,11 +16,11 @@ import com.dasilva.carlos.seriesfan.ui.adapter.EpisodeItemListener
 import com.dasilva.carlos.seriesfan.ui.adapter.EpisodesAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesDetailViewModel
 import com.dasilva.carlos.seriesfan.utils.observeStates
-import org.koin.android.viewmodel.ext.android.viewModel
+import com.dasilva.carlos.seriesfan.utils.sharedGraphViewModel
 
 class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layout.fragment_series_detail), EpisodeItemListener {
     override val binder = FragmentSeriesDetailBinding::bind
-    private val viewModel: SeriesDetailViewModel by viewModel()
+    private val viewModel: SeriesDetailViewModel by sharedGraphViewModel(R.id.navigation_series)
 
     companion object {
         private const val SERIES_ID = "SERIES_ID"
@@ -36,7 +36,8 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
     private fun prepareView() {
         binding.toolbar.setNavigationOnClickListener { navigateUp() }
 
-        viewModel.getSeriesInformation(getSeriesId()).observeStates(
+        viewModel.fetchViewInformation(getSeriesId())
+        viewModel.seriesInformation.observeStates(
             viewLifecycleOwner,
             onLoading = ::onLoading,
             onSuccess = ::onSuccess
