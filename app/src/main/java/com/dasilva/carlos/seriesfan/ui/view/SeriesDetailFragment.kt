@@ -17,6 +17,7 @@ import com.dasilva.carlos.seriesfan.ui.adapter.EpisodesAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesDetailViewModel
 import com.dasilva.carlos.seriesfan.utils.observeStates
 import com.dasilva.carlos.seriesfan.utils.sharedGraphViewModel
+import org.koin.android.ext.android.get
 
 class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layout.fragment_series_detail), EpisodeItemListener {
     override val binder = FragmentSeriesDetailBinding::bind
@@ -40,19 +41,24 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
         viewModel.seriesInformation.observeStates(
             viewLifecycleOwner,
             onLoading = ::onLoading,
-            onSuccess = ::onSuccess
+            onSuccess = ::onSuccess,
+            onError = ::onError
         )
     }
 
     private fun onLoading() {
-        binding.loadingView.isVisible = true
-        binding.detailsScroll.isVisible = false
+        binding.run {
+            loadingView.isVisible = true
+            detailsScroll.isVisible = false
+            errorView.isVisible = false
+        }
     }
 
     private fun onSuccess(data: SeriesDetailVO) {
         binding.run {
             loadingView.isVisible = false
             detailsScroll.isVisible = true
+            errorView.isVisible = false
 
             title.text = data.title
 
@@ -66,6 +72,18 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
 
             episodesRecyclerView.adapter = EpisodesAdapter(this@SeriesDetailFragment).apply {
                 submitList(data.episodes)
+            }
+        }
+    }
+
+    private fun onError(data: Throwable) {
+        binding.run {
+            loadingView.isVisible = false
+            detailsScroll.isVisible = false
+            errorView.isVisible = true
+
+            errorView.showError(data) {
+                viewModel.fetchViewInformation(getSeriesId())
             }
         }
     }

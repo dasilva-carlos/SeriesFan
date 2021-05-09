@@ -41,7 +41,9 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
 
     private fun preparePagedList() {
         pageAdapter = SeriesPageAdapter(this)
-        listAdapter = pageAdapter.withLoadStateFooter(LoadAdapter())
+        listAdapter = pageAdapter.withLoadStateFooter(LoadAdapter {
+            pageAdapter.retry()
+        })
 
         binding.run {
             recyclerView.adapter = listAdapter
@@ -52,7 +54,16 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
             pageAdapter.submitData(lifecycle, data)
         }
         pageAdapter.addLoadStateListener {
-            binding.loadingView.isVisible = (it.refresh == LoadState.Loading && pageAdapter.itemCount == 0)
+            binding.run {
+                loadingView.isVisible = it.refresh == LoadState.Loading && pageAdapter.itemCount == 0
+                errorViewCard.isVisible = it.refresh is LoadState.Error && pageAdapter.itemCount == 0
+
+                (it.refresh as? LoadState.Error)?.let { errorState ->
+                    errorView.showError(errorState.error) {
+                        pageAdapter.retry()
+                    }
+                }
+            }
         }
     }
 
@@ -75,18 +86,34 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
         viewModel.searchList.observeStates(
             viewLifecycleOwner,
             onLoading = ::onSearchLoading,
-            onSuccess = ::onSearchSuccess
+            onSuccess = ::onSearchSuccess,
+            onError = ::onSearchError
         )
     }
 
     private fun onSearchLoading() {
         binding.loadingView.isVisible = searchAdapter.itemCount == 0
+        binding.errorViewCard.isVisible = false
+        binding.notFoundText.isVisible = false
     }
 
     private fun onSearchSuccess(data: List<SeriesVO>) {
         binding.run {
             loadingView.isVisible = false
+            errorViewCard.isVisible = false
+            notFoundText.isVisible = data.isEmpty()
             searchAdapter.submitList(data)
+        }
+    }
+
+    private fun onSearchError(data: Throwable) {
+        binding.run {
+            loadingView.isVisible = false
+            errorViewCard.isVisible = true
+
+            errorView.showError(data) {
+                viewModel.search(editText.text?.toString())
+            }
         }
     }
 

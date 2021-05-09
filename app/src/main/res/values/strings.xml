@@ -16,4 +16,14 @@
 
     <string name="series_toolbar">Series</string>
     <string name="episode_toolbar">Episode</string>
+
+    <string name="no_series_found">No series found</string>
+
+    <string name="try_again">Try again</string>
+
+    <string name="default_error_title">Unexpected error!</string>
+    <string name="default_error_description">An unexpected error occurred, you may try again.</string>
+
+    <string name="internet_error_title">Internet error!</string>
+    <string name="internet_error_description">The network is unavailable, check your internet connection and try again.</string>
 </resources>

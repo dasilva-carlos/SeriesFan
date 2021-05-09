@@ -17,6 +17,7 @@ import com.dasilva.carlos.seriesfan.network.api.ShowsApi
 import com.dasilva.carlos.seriesfan.network.api.dto.EpisodeDTO
 import com.dasilva.carlos.seriesfan.network.api.dto.ShowDetailDTO
 import com.dasilva.carlos.seriesfan.network.data.ResponseState
+import com.dasilva.carlos.seriesfan.network.data.Success
 import com.dasilva.carlos.seriesfan.utils.getSpannedFromHtml
 import com.dasilva.carlos.seriesfan.utils.mapToResponseState
 import com.dasilva.carlos.seriesfan.utils.reduceWithComma
@@ -39,7 +40,7 @@ class SeriesDetailViewModel(
         }.asLiveData(viewModelScope.coroutineContext)
 
     fun fetchViewInformation(id: Int) {
-        if (seriesInformation.value == null) {
+        if (seriesInformation.value !is Success) {
             _seriesInformation.value = id
         }
     }

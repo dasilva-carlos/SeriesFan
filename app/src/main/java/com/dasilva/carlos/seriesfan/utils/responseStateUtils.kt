@@ -13,11 +13,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import timber.log.Timber
 
-fun <T : Any> Flow<T>.mapToResponseState(): Flow<ResponseState<T>> = merge(flowOf(Loading), map {
+fun <T : Any> Flow<T>.mapToResponseState() = merge(flowOf(Loading), map<T, ResponseState<T>> {
     Success(it)
 }.catch { e ->
     Timber.d(e)
-    Fail(e)
+    emit(Fail(e))
 })
 
 fun <T : Any> LiveData<ResponseState<T>>.observeStates(
