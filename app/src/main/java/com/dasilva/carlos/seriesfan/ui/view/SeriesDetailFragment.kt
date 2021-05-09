@@ -10,6 +10,7 @@ import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesDetailBinding
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeDetailVO
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesDetailVO
 import com.dasilva.carlos.seriesfan.navigation.goToEpisodeDetails
+import com.dasilva.carlos.seriesfan.navigation.navigateUp
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
 import com.dasilva.carlos.seriesfan.ui.adapter.EpisodeItemListener
 import com.dasilva.carlos.seriesfan.ui.adapter.EpisodesAdapter
@@ -33,6 +34,8 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
     }
 
     private fun prepareView() {
+        binding.toolbar.setNavigationOnClickListener { navigateUp() }
+
         viewModel.getSeriesInformation(getSeriesId()).observeStates(
             viewLifecycleOwner,
             onLoading = ::onLoading,

@@ -13,4 +13,7 @@
     <string name="episode_action_description">Ver detalhes do episodio</string>
 
     <string name="schedule_data">%1$s at %2$s</string>
+
+    <string name="series_toolbar">Series</string>
+    <string name="episode_toolbar">Episode</string>
 </resources>

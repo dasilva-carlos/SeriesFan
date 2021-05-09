@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide
 import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentEpisodeDetailBinding
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeDetailVO
+import com.dasilva.carlos.seriesfan.navigation.navigateUp
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
 
 class EpisodeDetailFragment : BindingFragment<FragmentEpisodeDetailBinding>(R.layout.fragment_episode_detail) {
@@ -25,6 +26,8 @@ class EpisodeDetailFragment : BindingFragment<FragmentEpisodeDetailBinding>(R.la
 
     private fun prepareView(data: EpisodeDetailVO) {
         binding.run {
+            toolbar.setNavigationOnClickListener { navigateUp() }
+
             Glide.with(root)
                 .load(data.image)
                 .into(banner)

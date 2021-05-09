@@ -12,3 +12,6 @@ fun Fragment.goToSeriesDetails(id: Int) =
 
 fun Fragment.goToEpisodeDetails(data: EpisodeDetailVO) =
     findNavController().navigate(R.id.action_to_episodeDetailFragment, EpisodeDetailFragment.buildBundle(data))
+
+fun Fragment.navigateUp() =
+    findNavController().navigateUp()
