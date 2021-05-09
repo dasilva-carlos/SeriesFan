@@ -7,14 +7,17 @@ import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesDetailBinding
+import com.dasilva.carlos.seriesfan.domain.vo.EpisodeDetailVO
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesDetailVO
+import com.dasilva.carlos.seriesfan.navigation.goToEpisodeDetails
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
+import com.dasilva.carlos.seriesfan.ui.adapter.EpisodeItemListener
 import com.dasilva.carlos.seriesfan.ui.adapter.EpisodesAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesDetailViewModel
 import com.dasilva.carlos.seriesfan.utils.observeStates
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layout.fragment_series_detail) {
+class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layout.fragment_series_detail), EpisodeItemListener {
     override val binder = FragmentSeriesDetailBinding::bind
     private val viewModel: SeriesDetailViewModel by viewModel()
 
@@ -30,7 +33,7 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
     }
 
     private fun prepareView() {
-        viewModel.getShowInformation(getSeriesId()).observeStates(
+        viewModel.getSeriesInformation(getSeriesId()).observeStates(
             viewLifecycleOwner,
             onLoading = ::onLoading,
             onSuccess = ::onSuccess
@@ -57,11 +60,15 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
             genreText.text = data.genres
             resumeText.text = data.resume
 
-            episodesRecyclerView.adapter = EpisodesAdapter().apply {
+            episodesRecyclerView.adapter = EpisodesAdapter(this@SeriesDetailFragment).apply {
                 submitList(data.episodes)
             }
         }
     }
 
     private fun getSeriesId() = requireArguments().getInt(SERIES_ID)
+
+    override fun onItemClicked(data: EpisodeDetailVO) {
+        goToEpisodeDetails(data)
+    }
 }

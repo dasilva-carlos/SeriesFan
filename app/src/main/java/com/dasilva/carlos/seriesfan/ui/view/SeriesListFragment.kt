@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesListBinding
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesVO
-import com.dasilva.carlos.seriesfan.navigation.goToDetails
+import com.dasilva.carlos.seriesfan.navigation.goToSeriesDetails
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
 import com.dasilva.carlos.seriesfan.ui.adapter.LoadAdapter
 import com.dasilva.carlos.seriesfan.ui.adapter.SeriesAdapter
@@ -103,6 +103,6 @@ class SeriesListFragment : BindingFragment<FragmentSeriesListBinding>(R.layout.f
     private fun RecyclerView.getGridLayout() = layoutManager as? GridLayoutManager
 
     override fun onItemClicked(data: SeriesVO) {
-        goToDetails(data.id)
+        goToSeriesDetails(data.id)
     }
 }

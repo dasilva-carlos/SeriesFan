@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.dasilva.carlos.seriesfan.R
+import com.dasilva.carlos.seriesfan.domain.vo.EpisodeDetailVO
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeItemVO
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeVO
 import com.dasilva.carlos.seriesfan.domain.vo.SeasonVO
@@ -26,7 +27,7 @@ class SeriesDetailViewModel(
 ) : ViewModel() {
     private val referenceContext = WeakReference(context)
 
-    fun getShowInformation(id: Int): LiveData<ResponseState<SeriesDetailVO>> =
+    fun getSeriesInformation(id: Int): LiveData<ResponseState<SeriesDetailVO>> =
         api.getShowDetails(id)
             .map(::convert)
             .mapToResponseState()
@@ -57,9 +58,16 @@ class SeriesDetailViewModel(
             }
 
             list.add(
-                EpisodeVO("${it.number} - ${it.name}", it)
+                EpisodeVO("${it.number} - ${it.name}", it.convert())
             )
         }
         return list
     }
+
+    private fun EpisodeDTO.convert() = EpisodeDetailVO(
+        name = name,
+        description = referenceContext.get()?.getString(R.string.episode_data, season, number).orEmpty(),
+        image = image?.original.orEmpty(),
+        resume = summary.getSpannedFromHtml()
+    )
 }

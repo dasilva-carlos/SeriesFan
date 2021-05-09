@@ -8,6 +8,7 @@ import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.ItemEpisodeBinding
 import com.dasilva.carlos.seriesfan.databinding.ItemSeasonBinding
 import com.dasilva.carlos.seriesfan.domain.EpisodeDiffCallback
+import com.dasilva.carlos.seriesfan.domain.vo.EpisodeDetailVO
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeItemVO
 import com.dasilva.carlos.seriesfan.domain.vo.EpisodeVO
 import com.dasilva.carlos.seriesfan.domain.vo.SeasonVO
@@ -17,7 +18,9 @@ import java.lang.IllegalArgumentException
 private const val SEASON_TYPE = 0
 private const val EPISODE_TYPE = 1
 
-class EpisodesAdapter : ListAdapter<EpisodeItemVO, RecyclerView.ViewHolder>(
+class EpisodesAdapter(
+    private val listener: EpisodeItemListener
+) : ListAdapter<EpisodeItemVO, RecyclerView.ViewHolder>(
     EpisodeDiffCallback()
 ) {
     override fun getItemViewType(position: Int): Int = when (getItem(position)) {
@@ -33,7 +36,7 @@ class EpisodesAdapter : ListAdapter<EpisodeItemVO, RecyclerView.ViewHolder>(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EpisodeViewHolder -> holder.bind(getItem(position))
+            is EpisodeViewHolder -> holder.bind(getItem(position), listener)
             is SeasonViewHolder -> holder.bind(getItem(position))
         }
     }
@@ -42,8 +45,11 @@ class EpisodesAdapter : ListAdapter<EpisodeItemVO, RecyclerView.ViewHolder>(
 class EpisodeViewHolder(view: View) : RecyclerView.ViewHolder(view) {
     private val binding = ItemEpisodeBinding.bind(view)
 
-    fun bind(data: EpisodeItemVO) {
+    fun bind(data: EpisodeItemVO, listener: EpisodeItemListener) {
         if (data !is EpisodeVO) return
+        binding.root.setOnClickListener {
+            listener.onItemClicked(data.episodeData)
+        }
         binding.itemTitle.text = data.title
     }
 }
@@ -55,4 +61,8 @@ class SeasonViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         if (data !is SeasonVO) return
         binding.itemTitle.text = data.title
     }
+}
+
+interface EpisodeItemListener {
+    fun onItemClicked(data: EpisodeDetailVO)
 }
