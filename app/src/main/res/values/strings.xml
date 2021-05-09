@@ -6,6 +6,9 @@
     <string name="schedule_text">Schedule:</string>
     <string name="genre_text">Genre:</string>
     <string name="resume_text">Resume:</string>
+    <string name="episodes_text">Episodes:</string>
+
+    <string name="season_data">Season %1$d</string>
 
     <string name="schedule_data">%1$s at %2$s</string>
 </resources>

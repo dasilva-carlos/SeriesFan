@@ -16,7 +16,7 @@
 
     <style name="Text.Default" parent="TextAppearance.AppCompat">
         <item name="android:textColor">@color/gray</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:padding">4dp</item>
         <item name="android:fontFamily">@font/raleway_medium</item>
     </style>

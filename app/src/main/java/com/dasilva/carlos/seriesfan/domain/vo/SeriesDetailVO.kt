@@ -7,5 +7,6 @@ class SeriesDetailVO(
     val banner: String,
     val schedule: String,
     val genres: String,
-    val resume: Spanned
+    val resume: Spanned,
+    val episodes: List<EpisodeItemVO>
 )

@@ -130,6 +130,19 @@
                 app:layout_constraintTop_toBottomOf="@id/resume_label"
                 tools:text="@tools:sample/lorem/random" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/episodesRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                android:layout_marginBottom="@dimen/spacing_default"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/resume_text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:listitem="@layout/item_episode"  />
+
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline"
                 android:layout_width="wrap_content"

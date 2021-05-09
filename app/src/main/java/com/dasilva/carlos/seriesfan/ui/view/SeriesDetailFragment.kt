@@ -9,6 +9,7 @@ import com.dasilva.carlos.seriesfan.R
 import com.dasilva.carlos.seriesfan.databinding.FragmentSeriesDetailBinding
 import com.dasilva.carlos.seriesfan.domain.vo.SeriesDetailVO
 import com.dasilva.carlos.seriesfan.structure.BindingFragment
+import com.dasilva.carlos.seriesfan.ui.adapter.EpisodesAdapter
 import com.dasilva.carlos.seriesfan.ui.viewmodel.SeriesDetailViewModel
 import com.dasilva.carlos.seriesfan.utils.observeStates
 import org.koin.android.viewmodel.ext.android.viewModel
@@ -55,6 +56,10 @@ class SeriesDetailFragment : BindingFragment<FragmentSeriesDetailBinding>(R.layo
             scheduleText.text = data.schedule
             genreText.text = data.genres
             resumeText.text = data.resume
+
+            episodesRecyclerView.adapter = EpisodesAdapter().apply {
+                submitList(data.episodes)
+            }
         }
     }
 
