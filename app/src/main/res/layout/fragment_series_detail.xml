@@ -124,7 +124,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_default"
                 android:layout_marginEnd="@dimen/spacing_default"
-                android:layout_marginBottom="@dimen/spacing_default"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/resume_label"
