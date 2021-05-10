@@ -6,10 +6,10 @@ Utiliza a API: [TV Maze](https://www.tvmaze.com/api)
 
 ## Aparência
 
-![Tela principal](/screenshots/Screenshot_1)
-![Pesquisa](/screenshots/Screenshot_2)
-![Sobre a série](/screenshots/Screenshot_3)
-![Sobre o episódio](/screenshots/Screenshot_3)
+![Tela principal](/screenshots/Screenshot_1.png)
+![Pesquisa](/screenshots/Screenshot_2.png)
+![Sobre a série](/screenshots/Screenshot_3.png)
+![Sobre o episódio](/screenshots/Screenshot_3.png)
 
 ## Estrutura
 
