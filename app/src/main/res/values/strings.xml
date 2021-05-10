@@ -26,4 +26,6 @@
 
     <string name="internet_error_title">Internet error!</string>
     <string name="internet_error_description">The network is unavailable, check your internet connection and try again.</string>
+
+    <string name="back_navigation">Back to previous page</string>
 </resources>
