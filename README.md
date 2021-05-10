@@ -13,7 +13,7 @@ Utiliza a API: [TV Maze](https://www.tvmaze.com/api)
 
 ## Estrutura
 
-O projeto é baseado em um modelo de MVVM simplificado.
+O projeto é baseado em um modelo MVVM simplificado.
 
 Ele possui apenas uma activity e a navegação entre Fragments é feita por meio das ferramentas de Jetpack 
 
@@ -25,15 +25,15 @@ O projeto é separado nos seguintes packages:
 
 * _network_ - Todas as estruturas relacionados com o consumo de API's online
 * _structure_ - Classes importantes para a aplicação Android
-* _ui_ - Fragments e View Models e Adapters
-* _customview_ - Views customizadas para o projeto
+* _ui_ - Fragments, View Models e Adapters
+* _customview_ - Views personalizadas para o projeto
 * _domain_ - View Objects e classes anexas
 * _navigation_ - Lógica de navegação entre telas
 * _utils_ - Funções genéricas
 
 ## Principais tecnologias / dependências utilizadas:
 
-* Requisições Rest: Retrofit 2, Gson
+* Requisições REST: Retrofit 2, Gson
 * Estruturação: Jetpack Lifecycle/ViewModel, Coroutines, Flow
 * Navegação: Jetpack Navigation
 * Gerenciamento de imagens: Glide
@@ -67,5 +67,9 @@ Ou no terminal:
 ## TO-DO's
 
 * Escrita e configuração de testes unitários / instrumentados.
-* Melhorar acessibilidade: marcar textos como título, incluir descrição de botões em elementos clicáveis, realizar testes de usabilidade.
-
+* Melhorar acessibilidade: 
+  * Marcar textos como título.
+  * Incluir descrição de botão em elementos clicáveis.
+  * Verificar contraste de cor.
+  * Realizar testes de usabilidade.
+* Teste com ofuscamento de código.
