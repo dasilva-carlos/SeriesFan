@@ -15,9 +15,11 @@ Utiliza a API: [TV Maze](https://www.tvmaze.com/api)
 
 O projeto é baseado em um modelo MVVM simplificado.
 
-Ele possui apenas uma activity e a navegação entre Fragments é feita por meio das ferramentas de Jetpack 
+Ele possui apenas uma Activity e a navegação entre Fragments é feita por meio do Jetpack Navigation
 
-A View Model provém LiveData's que são consumidos por Fragments e as tarefas assíncronas são feitas a partir de Coroutines.
+As ViewModels provém LiveDatas que são consumidos pelos Fragments.
+
+As tarefas assíncronas são feitas a partir de Coroutines.
 
 Flow é utilizado para ajudar no mapeamento e controle dessas tarefas assíncronas.
 
